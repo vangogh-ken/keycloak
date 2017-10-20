@@ -45,6 +45,132 @@
             <artifactId>keycloak-server-spi-private</artifactId>
             <scope>provided</scope>
         </dependency>
+        
+        
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-server-spi-private</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- loging -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>javax.jms</groupId>
+		    <artifactId>jms</artifactId>
+		    <version>1.1</version>
+		</dependency>
+				
+		<dependency>
+		    <groupId>org.apache.activemq</groupId>
+		    <artifactId>activemq-broker</artifactId>
+		    <version>5.15.1</version>
+		</dependency>
+		
+		
+		<!-- 
+		<dependency>
+            <groupId>org</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/slf4j-api-1.7.7.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+            <groupId>org</groupId>
+            <artifactId>activemq-broker-5.15.1</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/activemq-broker-5.15.1.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+            <groupId>org</groupId>
+            <artifactId>activemq-client-5.15.1</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/activemq-client-5.15.1.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+            <groupId>org</groupId>
+            <artifactId>activemq-openwire-legacy-5.15.1</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/activemq-openwire-legacy-5.15.1.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+            <groupId>org</groupId>
+            <artifactId>geronimo-j2ee-management_1.1_spec-1.0.1</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/geronimo-j2ee-management_1.1_spec-1.0.1.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+            <groupId>org</groupId>
+            <artifactId>geronimo-jms_1.1_spec-1.1.1</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/geronimo-jms_1.1_spec-1.1.1.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+            <groupId>org</groupId>
+            <artifactId>guava-18.0</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/guava-18.0.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+            <groupId>org</groupId>
+            <artifactId>hawtbuf-1.11</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/hawtbuf-1.11.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+            <groupId>org</groupId>
+            <artifactId>jms-1.1</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/jms-1.1.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+            <groupId>org</groupId>
+            <artifactId>logback-classic-1.1.6</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/logback-classic-1.1.6.jar</systemPath>
+		</dependency>
+		<dependency>
+            <groupId>org</groupId>
+            <artifactId>logback-core-1.1.6</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/logback-core-1.1.6.jar</systemPath>
+		</dependency>
+		 -->
+		
     </dependencies>
 
     <build>

@@ -25,6 +25,9 @@ import org.keycloak.events.admin.OperationType;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 
+import ch.qos.logback.core.joran.spi.JoranException;
+
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,9 +39,19 @@ public class SysoutEventListenerProviderFactory implements EventListenerProvider
     private Set<EventType> excludedEvents;
     private Set<OperationType> excludedAdminOperations;
 
+    static{
+    	System.out.println("SysoutEventListenerProviderFactory static");
+    	/*try {
+			LogbackConfigLoader.load("/logback.xml");
+		} catch (IOException | JoranException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+    }
+    
     @Override
     public EventListenerProvider create(KeycloakSession session) {
-        return new SysoutEventListenerProvider(excludedEvents, excludedAdminOperations);
+        return new SysoutEventListenerProvider(session, excludedEvents, excludedAdminOperations);
     }
 
     @Override

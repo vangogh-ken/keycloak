@@ -22,6 +22,7 @@ import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.events.admin.OperationType;
+import org.keycloak.models.KeycloakSession;
 
 import java.util.Map;
 import java.util.Set;
@@ -33,14 +34,23 @@ public class SysoutEventListenerProvider implements EventListenerProvider {
 
     private Set<EventType> excludedEvents;
     private Set<OperationType> excludedAdminOperations;
+    private KeycloakSession session;
+    private MqQueueConnectonConsumer mqQueueConnectonConsumer;
+    static{
+    	System.out.println("SysoutEventListenerProvider static");
+    }
 
-    public SysoutEventListenerProvider(Set<EventType> excludedEvents, Set<OperationType> excludedAdminOpearations) {
+    public SysoutEventListenerProvider(KeycloakSession session, Set<EventType> excludedEvents, Set<OperationType> excludedAdminOpearations) {
         this.excludedEvents = excludedEvents;
         this.excludedAdminOperations = excludedAdminOpearations;
+        this.session = session;
+        this.mqQueueConnectonConsumer = new MqQueueConnectonConsumer("", "", "tcp://127.0.0.1:61616", "logback");
     }
 
     @Override
     public void onEvent(Event event) {
+    	System.out.println("EVENT: " + toString(event));
+    	this.mqQueueConnectonConsumer.message(toString(event));
         // Ignore excluded events
         if (excludedEvents != null && excludedEvents.contains(event.getType())) {
             return;
@@ -51,6 +61,8 @@ public class SysoutEventListenerProvider implements EventListenerProvider {
 
     @Override
     public void onEvent(AdminEvent event, boolean includeRepresentation) {
+    	System.out.println("EVENT: " + toString(event));
+    	this.mqQueueConnectonConsumer.message(toString(event));
         // Ignore excluded operations
         if (excludedAdminOperations != null && excludedAdminOperations.contains(event.getOperationType())) {
             return;
@@ -122,6 +134,7 @@ public class SysoutEventListenerProvider implements EventListenerProvider {
     
     @Override
     public void close() {
+    	this.mqQueueConnectonConsumer.close();
     }
 
 }
