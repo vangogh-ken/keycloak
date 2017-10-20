@@ -17,6 +17,9 @@
 
 package org.fast;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.keycloak.Config;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventListenerProviderFactory;
@@ -24,25 +27,16 @@ import org.keycloak.events.EventType;
 import org.keycloak.events.admin.OperationType;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.core.joran.spi.JoranException;
-
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
-public class SysoutEventListenerProviderFactory implements EventListenerProviderFactory {
+public class CustomEventListenerProviderFactory implements EventListenerProviderFactory {
 
     private Set<EventType> excludedEvents;
     private Set<OperationType> excludedAdminOperations;
-    private static Logger LOG = LoggerFactory.getLogger(SysoutEventListenerProviderFactory.class);
     
-    private static SysoutEventListenerProvider sysoutEventListenerProvider;
+    private static CustomEventListenerProvider sysoutEventListenerProvider;
     
     static{
     	/*try {
@@ -50,21 +44,23 @@ public class SysoutEventListenerProviderFactory implements EventListenerProvider
 		} catch (IOException | JoranException e) {
 			e.printStackTrace();
 		}*/
-    	LOG.info("SysoutEventListenerProviderFactory static");
+    	 System.out.println("SysoutEventListenerProviderFactory static");
     }
 
     @Override
     public EventListenerProvider create(KeycloakSession session) {
-    	LOG.info("SysoutEventListenerProvider create");
-    	if(sysoutEventListenerProvider == null){
+    	 System.out.println("SysoutEventListenerProvider create");
+    	/*if(sysoutEventListenerProvider == null){
     		sysoutEventListenerProvider = new SysoutEventListenerProvider(excludedEvents, excludedAdminOperations);
     	}
-        return sysoutEventListenerProvider;
+        return sysoutEventListenerProvider;*/
+        
+        return new CustomEventListenerProvider(excludedEvents, excludedAdminOperations);
     }
 
     @Override
     public void init(Config.Scope config) {
-    	LOG.info("SysoutEventListenerProviderFactory init");
+    	 System.out.println("SysoutEventListenerProviderFactory init");
     	String[] excludes = config.getArray("excludes");
         if (excludes != null) {
             excludedEvents = new HashSet<>();
@@ -84,7 +80,7 @@ public class SysoutEventListenerProviderFactory implements EventListenerProvider
 
     @Override
     public void postInit(KeycloakSessionFactory factory) {
-    	LOG.info("SysoutEventListenerProviderFactory postInit");
+    	 System.out.println("SysoutEventListenerProviderFactory postInit");
     }
     @Override
     public void close() {
@@ -92,9 +88,9 @@ public class SysoutEventListenerProviderFactory implements EventListenerProvider
 
     @Override
     public String getId() {
-        return "keycloak";
+        return "logback-event";
     }
     public static void main(String[] args) {
-    	LOG.info("SysoutEventListenerProvider test");
+    	 System.out.println("SysoutEventListenerProvider test");
 	}
 }

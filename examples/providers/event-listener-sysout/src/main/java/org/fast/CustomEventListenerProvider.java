@@ -17,33 +17,29 @@
 
 package org.fast;
 
+import java.io.Serializable;
+import java.util.Map;
+import java.util.Set;
+
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.events.admin.OperationType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
-public class SysoutEventListenerProvider implements EventListenerProvider {
-	private static Logger LOG = LoggerFactory.getLogger(SysoutEventListenerProvider.class);
+public class CustomEventListenerProvider implements EventListenerProvider {
 
     private Set<EventType> excludedEvents;
     private Set<OperationType> excludedAdminOperations;
-    private MqQueueConnectonConsumer consumer;
     
     static{
-    	LOG.info("SysoutEventListenerProvider static");
+    	System.out.println("SysoutEventListenerProvider static");
     }
 
-    public SysoutEventListenerProvider(Set<EventType> excludedEvents, Set<OperationType> excludedAdminOpearations) {
+    public CustomEventListenerProvider(Set<EventType> excludedEvents, Set<OperationType> excludedAdminOpearations) {
         this.excludedEvents = excludedEvents;
         this.excludedAdminOperations = excludedAdminOpearations;
         //consumer = new MqQueueConnectonConsumer("", "", "tcp://127.0.0.1:61616", "logback");
@@ -51,8 +47,7 @@ public class SysoutEventListenerProvider implements EventListenerProvider {
 
     @Override
     public void onEvent(Event event) {
-    	
-    	LOG.info("event:  {}", toString(event));
+    	System.out.println(toString(event));
     	//consumer.message(new EventSerialized(event));
     	// Ignore excluded events
         if (excludedEvents != null && excludedEvents.contains(event.getType())) {
@@ -64,7 +59,7 @@ public class SysoutEventListenerProvider implements EventListenerProvider {
 
     @Override
     public void onEvent(AdminEvent event, boolean includeRepresentation) {
-    	LOG.info("event:  {}", toString(event));
+    	System.out.println(toString(event));
     	//consumer.message(new EventSerialized(event));
     	// Ignore excluded operations
         if (excludedAdminOperations != null && excludedAdminOperations.contains(event.getOperationType())) {
@@ -139,10 +134,6 @@ public class SysoutEventListenerProvider implements EventListenerProvider {
     public void close() {
     	//consumer.close();
     }
-    
-    public static void main(String[] args) {
-    	new MqQueueConnectonConsumer("", "", "tcp://127.0.0.1:61616", "logback").message("TEST1").retrieve().message("TEST2").close();
-	}
 
     public static class EventSerialized extends Event implements Serializable{
     	/**

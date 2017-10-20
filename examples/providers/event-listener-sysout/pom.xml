@@ -34,6 +34,7 @@
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-core</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.keycloak</groupId>
@@ -45,41 +46,9 @@
             <artifactId>keycloak-server-spi-private</artifactId>
             <scope>provided</scope>
         </dependency>
-        
-        <!-- loging -->
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-			<version>1.1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/javax.jms/jms -->
-		<dependency>
-		    <groupId>javax.jms</groupId>
-		    <artifactId>jms</artifactId>
-		    <version>1.1</version>
-		</dependency>
-				
-				<!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-broker -->
-		<dependency>
-		    <groupId>org.apache.activemq</groupId>
-		    <artifactId>activemq-broker</artifactId>
-		    <version>5.15.1</version>
-		</dependency>
-		
-		
     </dependencies>
 
     <build>
-        <finalName>event-listener-sysout-example</finalName>
+        <finalName>logback</finalName>
     </build>
 </project>
