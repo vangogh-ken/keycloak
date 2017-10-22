@@ -86,4 +86,7 @@ public class SysoutEventListenerProviderFactory implements EventListenerProvider
         return "sysout";
     }
 
+    public static void main(String[] args) {
+		
+	}
 }
