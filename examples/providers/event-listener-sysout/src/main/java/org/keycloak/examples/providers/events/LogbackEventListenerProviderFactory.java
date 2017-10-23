@@ -17,6 +17,9 @@
 
 package org.keycloak.examples.providers.events;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.keycloak.Config;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventListenerProviderFactory;
@@ -24,39 +27,29 @@ import org.keycloak.events.EventType;
 import org.keycloak.events.admin.OperationType;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
-
-import ch.qos.logback.core.joran.spi.JoranException;
-
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
+ * 导出jar包时，需选择export all output folders for checked projects
+ * @author pzg
+ *
  */
-public class SysoutEventListenerProviderFactory implements EventListenerProviderFactory {
+public class LogbackEventListenerProviderFactory implements EventListenerProviderFactory {
 
     private Set<EventType> excludedEvents;
     private Set<OperationType> excludedAdminOperations;
-
-    static{
-    	System.out.println("SysoutEventListenerProviderFactory static");
-    	/*try {
-			LogbackConfigLoader.load("/logback.xml");
-		} catch (IOException | JoranException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-    }
+    private static Logger LOG = LoggerFactory.getLogger(LogbackEventListenerProviderFactory.class);
     
     @Override
     public EventListenerProvider create(KeycloakSession session) {
-        return new SysoutEventListenerProvider(session, excludedEvents, excludedAdminOperations);
+        return new LogbackEventListenerProvider(session, excludedEvents, excludedAdminOperations);
     }
 
     @Override
     public void init(Config.Scope config) {
-        String[] excludes = config.getArray("excludes");
+    	LOG.info("EventListenerProviderFactory initiated, id: {}", this.getId());
+    	String[] excludes = config.getArray("excludes");
         if (excludes != null) {
             excludedEvents = new HashSet<>();
             for (String e : excludes) {
@@ -83,7 +76,7 @@ public class SysoutEventListenerProviderFactory implements EventListenerProvider
 
     @Override
     public String getId() {
-        return "sysout";
+        return "logback";
     }
 
     public static void main(String[] args) {

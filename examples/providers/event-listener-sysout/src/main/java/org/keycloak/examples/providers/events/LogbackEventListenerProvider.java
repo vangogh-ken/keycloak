@@ -17,41 +17,45 @@
 
 package org.keycloak.examples.providers.events;
 
+import java.util.Map;
+import java.util.Set;
+
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.events.admin.OperationType;
 import org.keycloak.models.KeycloakSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-import java.util.Set;
-
-/**
- * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
- */
-public class SysoutEventListenerProvider implements EventListenerProvider {
-
+public class LogbackEventListenerProvider implements EventListenerProvider {
+	private static Logger LOG = LoggerFactory.getLogger(LogbackEventListenerProvider.class);
     private Set<EventType> excludedEvents;
     private Set<OperationType> excludedAdminOperations;
     private KeycloakSession session;
     private MqQueueConnectonConsumer mqQueueConnectonConsumer;
+    private static final String queueUser = "";
+    private static final String queuePass = "";
+    private static final String queueUrl = "tcp://127.0.0.1:61616";
+    private static final String queueName = "logback";
+    
     static{
-    	System.out.println("SysoutEventListenerProvider static");
+    	System.out.println("SysoutEventListenerProvider static area");
     }
 
-    public SysoutEventListenerProvider(KeycloakSession session, Set<EventType> excludedEvents, Set<OperationType> excludedAdminOpearations) {
+    public LogbackEventListenerProvider(KeycloakSession session, Set<EventType> excludedEvents, Set<OperationType> excludedAdminOpearations) {
         this.excludedEvents = excludedEvents;
         this.excludedAdminOperations = excludedAdminOpearations;
         this.session = session;
-        this.mqQueueConnectonConsumer = new MqQueueConnectonConsumer("", "", "tcp://127.0.0.1:61616", "logback");
+        System.out.println(this.session.toString());
+        this.mqQueueConnectonConsumer = new MqQueueConnectonConsumer(queueUser, queuePass, queueUrl, queueName);
     }
 
     @Override
     public void onEvent(Event event) {
-    	System.out.println("EVENT: " + toString(event));
+    	LOG.info("EVENT: {}", toString(event));
     	this.mqQueueConnectonConsumer.message(toString(event));
-        // Ignore excluded events
         if (excludedEvents != null && excludedEvents.contains(event.getType())) {
             return;
         } else {
@@ -61,9 +65,8 @@ public class SysoutEventListenerProvider implements EventListenerProvider {
 
     @Override
     public void onEvent(AdminEvent event, boolean includeRepresentation) {
-    	System.out.println("EVENT: " + toString(event));
+    	LOG.info("EVENT: {}", toString(event));
     	this.mqQueueConnectonConsumer.message(toString(event));
-        // Ignore excluded operations
         if (excludedAdminOperations != null && excludedAdminOperations.contains(event.getOperationType())) {
             return;
         } else {
@@ -136,5 +139,4 @@ public class SysoutEventListenerProvider implements EventListenerProvider {
     public void close() {
     	this.mqQueueConnectonConsumer.close();
     }
-
 }

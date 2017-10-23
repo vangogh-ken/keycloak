@@ -31,7 +31,6 @@ public class MqQueueConnectonConsumer {
 			// Connection 启动
 			this.connection.start();
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -43,7 +42,6 @@ public class MqQueueConnectonConsumer {
 			// Connection 启动
 			connection.start();
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -83,18 +81,15 @@ public class MqQueueConnectonConsumer {
 			try {
 				Thread.sleep(1000 * 5);
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			retrieve();
 			message(message);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			try {
 				Thread.sleep(1000 * 5);
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			retrieve();
@@ -112,7 +107,6 @@ public class MqQueueConnectonConsumer {
 	 */
 	public static void sendMessage(Session session, MessageProducer producer, Serializable message) throws Exception {
 		ObjectMessage orderMess = session.createObjectMessage(message);
-		System.out.println("向ActiveMq:发送订单信息：" + "ActiveMq 发送的Topic消息");
 		producer.send(orderMess);
 	}
 
